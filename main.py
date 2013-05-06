@@ -30,6 +30,7 @@ def main():
     sumOfFailedDiscoveries = 0
     sumOfTTLDrops = 0
     sumOfInexplicableLosses = 0
+    sum_of_route_failures_due_to_evaporation = 0
     for replication in configuration.experiments[experimentName]:
       analyser = pdr.PacketDeliveryRateAnalysis()      
       analyser.evaluate(replication.nodes)
@@ -38,6 +39,7 @@ def main():
       sumOfReceivedPackets += analyser.received
       sumOfLoops += analyser.routing_loop_detected
       sumOfRouteFailures += analyser.route_failures
+      sum_of_route_failures_due_to_evaporation += analyser.route_failures_from_evaporation
       sumOfFailedDiscoveries += analyser.route_discovery_failed
       sumOfTTLDrops += analyser.time_to_live_expired
       sumOfInexplicableLosses += analyser.inexplicable_loss
@@ -52,6 +54,7 @@ def main():
     print_statistics("Received Packets", avgNrOfSentPackets, sumOfReceivedPackets/float(nrOfIterations))
     print_statistics("Routing Loops", avgNrOfSentPackets, sumOfLoops/float(nrOfIterations))
     print_statistics("Route Failures", avgNrOfSentPackets, sumOfRouteFailures/float(nrOfIterations))
+    print_statistics(" - from evaporation", avgNrOfSentPackets, sum_of_route_failures_due_to_evaporation/float(nrOfIterations))
     print_statistics("Failed Route Discoveries", avgNrOfSentPackets, sumOfFailedDiscoveries/float(nrOfIterations))
     print_statistics("Dropped Packets (TTL = 0)", avgNrOfSentPackets, sumOfTTLDrops/float(nrOfIterations))
     print_statistics("Inexplicable loss", avgNrOfSentPackets, sumOfInexplicableLosses/float(nrOfIterations))

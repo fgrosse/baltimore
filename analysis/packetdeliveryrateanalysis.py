@@ -9,6 +9,7 @@ class PacketDeliveryRateAnalysis:
     self.sent = 0
     self.received = 0
     self.route_failures = 0
+    self.route_failures_from_evaporation = 0
     self.routing_loop_detected = 0
     self.route_discovery_failed = 0
     self.time_to_live_expired = 0
@@ -19,6 +20,7 @@ class PacketDeliveryRateAnalysis:
       self.sent += int(self.get_metric(nodes, node, "trafficSent"))
       self.received += int(self.get_metric(nodes, node, "trafficReceived"))
       self.route_failures += int(self.get_metric(nodes, node, "routeFailure:count"))
+      self.route_failures_from_evaporation += int(self.get_metric(nodes, node, "nonSourceRouteDiscovery:count"))
       self.routing_loop_detected += int(self.get_metric(nodes, node, "routingLoopDetected:count"))
       self.route_discovery_failed += int(self.get_metric(nodes, node, "packetUnDeliverable:count"))
       self.time_to_live_expired += int(self.get_metric(nodes, node, "dropZeroTTLPacket:count"))
